@@ -1,0 +1,11 @@
+version: '2'
+services:
+  exam-postgresql:
+    image: postgres:11.3
+    # volumes:
+    #     - ~/volumes/jhipster/Exam/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=Exam
+      - POSTGRES_PASSWORD=
+    ports:
+      - 5432:5432

@@ -1,0 +1,34 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.synectiks.exam"
+    },
+    "jhipsterVersion": "6.1.2",
+    "applicationType": "microservice",
+    "baseName": "Exam",
+    "packageName": "com.synectiks.exam",
+    "packageFolder": "com/synectiks/exam",
+    "serverPort": "9096",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "Y2RjMjgyMDg4YTNiNTM4NzY4Mzk2OGQzNjkzOWEyOTZmOWU2YmFiMzZjYWE5OTUxNDVlZjA0ZjRlYzVkMmZjNWQ4OGU4ZWNhY2NjZjRhZjY5MzBmYTgzMTI2YzRkYmY0NzgwNzc2NjFmNmJjMmJiMTg1MjgwZGM3MWExOWJhODY=",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
