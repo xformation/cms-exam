@@ -1,0 +1,57 @@
+
+entity StudentExamReport{
+	marksObtained Integer
+	comments String
+	gOp Integer
+	sectionId Long
+	subjectId Long
+	departmentId Long
+	batchId Long
+	academicyearId Long
+	studentId Long
+}
+
+entity AcademicExamSetting {
+    examName String
+    semester String
+    examDate LocalDate
+    startTime String
+    endTime String
+    gradeType String
+    total Integer
+    passing Integer
+    actions String
+    groupvalue Long
+    countvalue Long
+	branchId Long
+	subjectId Long
+	departmentId Long
+	academicyearId Long
+	sectionId Long
+	batchId Long
+}
+
+entity CompetitiveExam {
+	testName String 
+	testScore Integer 
+	enrollmentNo Long 
+	rank Long 
+	studentId Long
+}
+
+entity TypeOfGrading{
+    minMarks  Integer
+    maxMarks Integer
+    grades String
+    groupvalue Long
+}
+
+relationship ManyToOne {
+	StudentExamReport{academicExamSetting} to AcademicExamSetting,
+	StudentExamReport{typeOfGrading} to TypeOfGrading,
+	AcademicExamSetting{typeOfGrading} to TypeOfGrading
+}
+
+
+dto * with mapstruct
+service all with serviceImpl
