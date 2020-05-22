@@ -1,0 +1,68 @@
+{
+    "name": "StudentExamReport",
+    "fields": [
+        {
+            "fieldName": "marksObtained",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "comments",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gOp",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "sectionId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "subjectId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "departmentId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "batchId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "academicyearId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "studentId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "academicExamSetting",
+            "otherEntityRelationshipName": "studentExamReport",
+            "relationshipName": "academicExamSetting",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "typeOfGrading",
+            "otherEntityRelationshipName": "studentExamReport",
+            "relationshipName": "typeOfGrading",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200522073000",
+    "entityTableName": "student_exam_report",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Exam",
+    "applications": "*",
+    "microserviceName": "Exam"
+}

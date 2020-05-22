@@ -1,0 +1,37 @@
+{
+    "name": "CompetitiveExam",
+    "fields": [
+        {
+            "fieldName": "testName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "testScore",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "enrollmentNo",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "rank",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "studentId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200522073200",
+    "entityTableName": "competitive_exam",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Exam",
+    "applications": "*",
+    "microserviceName": "Exam"
+}

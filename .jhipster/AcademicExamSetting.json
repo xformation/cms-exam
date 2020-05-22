@@ -1,0 +1,93 @@
+{
+    "name": "AcademicExamSetting",
+    "fields": [
+        {
+            "fieldName": "examName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "semester",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "examDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gradeType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "total",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "passing",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "actions",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "groupvalue",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "countvalue",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "branchId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "subjectId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "departmentId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "academicyearId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "sectionId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "batchId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "typeOfGrading",
+            "otherEntityRelationshipName": "academicExamSetting",
+            "relationshipName": "typeOfGrading",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200522073100",
+    "entityTableName": "academic_exam_setting",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Exam",
+    "applications": "*",
+    "microserviceName": "Exam"
+}

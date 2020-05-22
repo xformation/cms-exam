@@ -1,0 +1,33 @@
+{
+    "name": "TypeOfGrading",
+    "fields": [
+        {
+            "fieldName": "minMarks",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "maxMarks",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "grades",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "groupvalue",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200522073300",
+    "entityTableName": "type_of_grading",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "Exam",
+    "applications": "*",
+    "microserviceName": "Exam"
+}
