@@ -14,7 +14,7 @@ logging:
   level:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
-    com.synectiks.student: DEBUG
+    com.synectiks.exam: DEBUG
 
 spring:
   application:
@@ -72,7 +72,7 @@ spring:
   servlet.multipart.max-request-size: 300MB
 # ===================================================================
 # To enable SSL, generate a certificate using:
-# keytool -genkey -alias student -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+# keytool -genkey -alias exam -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
 #
 # You can also use Let's Encrypt:
 # https://maximilian-boehm.com/hp2121/Create-a-Java-Keystore-JKS-from-Let-s-Encrypt-Certificates.htm
@@ -85,7 +85,7 @@ spring:
 #        key-store: keystore.p12
 #        key-store-password: <your-password>
 #        key-store-type: PKCS12
-#        key-alias: student
+#        key-alias: exam
 # ===================================================================
 
 server:
