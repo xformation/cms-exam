@@ -1,0 +1,133 @@
+scalar Date
+
+type Mutation {
+	 addAcademicExamSetting(input: [AddAcademicExamSettingInput]): AddAcademicExamSettingPayload
+     updateAcademicExamSetting(input: UpdateAcademicExamSettingInput): UpdateAcademicExamSettingPayload
+     removeAcademicExamSetting(input: RemoveAcademicExamSettingInput): RemoveAcademicExamSettingPayload
+
+     addTypeOfGrading(input: [AddTypeOfGradingInput]): AddTypeOfGradingPayload
+     updateTypeOfGrading(input: UpdateTypeOfGradingInput): UpdateTypeOfGradingPayload
+     removeTypeOfGrading(input: RemoveTypeOfGradingInput): RemoveTypeOfGradingPayload
+
+}
+
+type Query {
+  academicExamSetting(id: Long):AcademicExamSetting
+  academicExamSettings: [AcademicExamSetting]
+
+  typeOfGrading(id: Int): TypeOfGrading
+  typeOfGradings:[TypeOfGrading]
+
+}
+
+type AcademicExamSetting{
+    id: Long
+    examName: String
+    semester: String
+    examDate: Date
+    startTime: String
+    endTime: String
+    gradeType: String
+    total: Int
+    passing: Int
+    actions: String
+    groupvalue: Long
+    countvalue: Long
+    branchId: Long
+    subjectId: Long
+    departmentId: Long
+    academicyearId: Long
+    sectionId: Long
+    batchId: Long
+    typeOfGrading: TypeOfGrading
+}
+
+type TypeOfGrading{
+    id: Long
+    minMarks: Int
+    maxMarks: Int
+    grades: String
+    groupvalue: Long
+}
+
+input AddAcademicExamSettingInput{
+    examName: String
+    semester: String
+    examDate: Date
+    startTime: String
+    endTime: String
+    gradeType: String
+    total: Int
+    passing: Int
+    actions: String
+    countvalue: Long
+    groupvalue: Long
+    departmentId: Long
+    sectionId: Long
+    subjectId: Long
+    academicyearId: Long
+    batchId: Long
+    branchId: Long
+    typeOfGradingId: Long
+}
+
+type AddAcademicExamSettingPayload {
+    academicExamSetting: AcademicExamSetting
+}
+input UpdateAcademicExamSettingInput {
+    id: Long
+    examName: String
+    semester: String
+    examDate: Date
+    startTime: String
+    endTime: String
+    gradeType: String
+    total: Int
+    passing: Int
+    actions: String
+    groupvalue: Long
+    departmentId: Long
+    sectionId: Long
+    subjectId: Long
+    academicyearId: Long
+    batchId: Long
+    branchId: Long
+    typeOfGradingId: Long
+}
+
+type UpdateAcademicExamSettingPayload {
+    academicExamSetting: AcademicExamSetting
+}
+input RemoveAcademicExamSettingInput {
+   academicExamSettingId: Long
+}
+type RemoveAcademicExamSettingPayload {
+    academicExamSettings: [ AcademicExamSetting]
+}
+
+input AddTypeOfGradingInput{
+    minMarks: Int
+    maxMarks: Int
+    grades: String
+}
+
+type AddTypeOfGradingPayload {
+    typeOfGrading: TypeOfGrading
+}
+input UpdateTypeOfGradingInput {
+    id: Long
+    minMarks: Int
+    maxMarks: Int
+    grades: String
+    groupvalue: Long
+}
+
+type UpdateTypeOfGradingPayload {
+    typeOfGrading: TypeOfGrading
+}
+input RemoveTypeOfGradingInput {
+   typeOfGradingId: Long
+}
+type RemoveTypeOfGradingPayload {
+    typeOfGradings: [ TypeOfGrading]
+}
