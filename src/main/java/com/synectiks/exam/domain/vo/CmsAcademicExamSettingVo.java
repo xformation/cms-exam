@@ -3,6 +3,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.synectiks.exam.domain.*;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -14,6 +16,7 @@ public class CmsAcademicExamSettingVo implements Serializable {
     private String semester;
     private LocalDate examDate;
     private String strexamDate;
+
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private String day;
@@ -32,7 +35,12 @@ public class CmsAcademicExamSettingVo implements Serializable {
     private Long branchId;
     private Long academicyearId;
     private Long subjectId;
-    private Long typeOfGradingId;
+    private Department department;
+    private AcademicYear academicyear;
+    private Section section;
+    private Subject subject;
+    private Batch batch;
+    private Branch branch;
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -206,12 +214,52 @@ public class CmsAcademicExamSettingVo implements Serializable {
         this.subjectId = subjectId;
     }
 
-    public Long getTypeOfGradingId() {
-        return typeOfGradingId;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setTypeOfGradingId(Long typeOfGradingId) {
-        this.typeOfGradingId = typeOfGradingId;
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public AcademicYear getAcademicyear() {
+        return academicyear;
+    }
+
+    public void setAcademicyear(AcademicYear academicyear) {
+        this.academicyear = academicyear;
+    }
+
+    public Section getSection() {
+        return section;
+    }
+
+    public void setSection(Section section) {
+        this.section = section;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
+    public Batch getBatch() {
+        return batch;
+    }
+
+    public void setBatch(Batch batch) {
+        this.batch = batch;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 
     @Override
@@ -238,7 +286,12 @@ public class CmsAcademicExamSettingVo implements Serializable {
             ", branchId=" + branchId +
             ", academicyearId=" + academicyearId +
             ", subjectId=" + subjectId +
-            ", typeOfGradingId=" + typeOfGradingId +
+            ", department=" + department +
+            ", academicyear=" + academicyear +
+            ", section=" + section +
+            ", subject=" + subject +
+            ", batch=" + batch +
+            ", branch=" + branch +
             '}';
     }
 }

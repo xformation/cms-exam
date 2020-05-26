@@ -9,14 +9,15 @@ type Mutation {
      updateTypeOfGrading(input: UpdateTypeOfGradingInput): UpdateTypeOfGradingPayload
      removeTypeOfGrading(input: RemoveTypeOfGradingInput): RemoveTypeOfGradingPayload
 
-         addCompetitiveExam(input:AddCompetitiveExamInput):AddCompetitiveExamPayload
-         updateCompetitiveExam(input:UpdateCompetitiveExamInput):UpdateCompetitiveExamPayload
-         removeCompetitiveExam(input:RemoveCompetitiveExamInput):RemoveCompetitiveExamPayload
+     addCompetitiveExam(input:AddCompetitiveExamInput):AddCompetitiveExamPayload
+     updateCompetitiveExam(input:UpdateCompetitiveExamInput):UpdateCompetitiveExamPayload
+     removeCompetitiveExam(input:RemoveCompetitiveExamInput):RemoveCompetitiveExamPayload
 
-        addStudentExamReport(input: AddStudentExamReportInput): AddStudentExamReportPayload
-        updateStudentExamReport(input: UpdateStudentExamReportInput): UpdateStudentExamReportPayload
-        removeStudentExamReport(input: RemoveStudentExamReportInput): RemoveStudentExamReportPayload
+     addStudentExamReport(input: AddStudentExamReportInput): AddStudentExamReportPayload
+     updateStudentExamReport(input: UpdateStudentExamReportInput): UpdateStudentExamReportPayload
+     removeStudentExamReport(input: RemoveStudentExamReportInput): RemoveStudentExamReportPayload
 
+     getExamList(filter: ExamListFilterInput): [CmsAcademicExamSettingVo]
 }
 
 type Query {
@@ -32,6 +33,8 @@ type Query {
   competitiveExam (id: Long): CompetitiveExam
   competitiveExams: [CompetitiveExam]
 
+  searchAcademicExamSetting(sectionId:Long, subjectId:Long, departmentId:Long, batchId:Long, branchId:Long, semester: String, examName: String): [CmsAcademicExamSettingVo]
+  createExamFilterDataCache(branchId: Long, departmentId: Long, academicYearId: Long): ExamFilterDataCache
 }
 
 type AcademicExamSetting{
@@ -231,13 +234,168 @@ input UpdateCompetitiveExamInput {
         studentId: Long
 }
 
-type UpdateCompetitiveExamPayload {
+ type UpdateCompetitiveExamPayload {
     competitiveExam: CompetitiveExam
-}
-input RemoveCompetitiveExamInput {
+ }
+ input RemoveCompetitiveExamInput {
    competitiveExamId: Long
-}
-type RemoveCompetitiveExamPayload {
+ }
+ type RemoveCompetitiveExamPayload {
     competitiveExams: [ CompetitiveExam]
+ }
+
+ input ExamListFilterInput {
+      branchId:String
+  	  departmentId:String
+	  batchId: String
+	  sectionId: String
+	  subjectId: String
+ }
+
+ type CmsAcademicExamSettingVo {
+  id: Long
+  examName: String
+  semester: String
+  examDate: Date
+  strexamDate: String
+  day: String
+  duration: String
+  startTime: String
+  gradeType: String
+  endTime: String
+  total: Int
+  passing: Int
+  actions: String
+  groupValue: Long
+  countValue: Long
+  departmentId: Long
+  batchId: Long
+  sectionId: Long
+  branchId: Long
+  academicyearId: Long
+  subjectId: Long
+  academicyear: AcademicYear
+  subject: Subject
+  branch: Branch
+  department: Department
+  section : Section
+  batch : Batch
+ }
+
+  type AcademicYear {
+	id:	Long
+	description: String
+	startDate: Date
+	endDate: Date
+	comments: String
+	createdBy: String
+	createdOn: Date
+	updatedBy: String
+	updatedOn: Date
+	status: String
+ }
+
+  type Section {
+	id: Long
+    section: String
+    batch: Batch
+   }
+
+  type Batch {
+	id:	Long
+	batch: 	String
+	department:	Department
 }
 
+type Department {
+	id:	Long
+	name: String
+	description: String
+	deptHead: String
+	comments: String
+	createdBy: String
+	createdOn: Date
+	updatedBy: String
+	updatedOn: Date
+	status: String
+	branch: Branch
+	academicYear: AcademicYear
+}
+
+type Branch {
+	id:	Long
+	branchName: String
+	address: String
+	pinCode: String
+	branchHead: String
+	cellPhoneNo: String
+	landLinePhoneNo: String
+	emailId: String
+	faxNo: String
+	isMainBranch: String
+	startDate: Date
+	createdBy: String
+	createdOn:    Date
+	updatedBy:          String
+	updatedOn:          Date
+	status:             String
+	college:            College
+	city:               City
+	state:              State
+}
+
+type State {
+	id:				Long
+	stateName:      String
+	divisionType:   String
+	stateCode:      String
+	country:        Country
+}
+
+type City {
+	id:			Long
+	cityName:   String
+	cityCode:   String
+	stdCode:    String
+	state:      State
+}
+
+type College {
+	id:					Long
+	collegeName:        String
+	logoFilePath:       String
+	logoFileName:       String
+	logoFileExtension:  String
+	createdBy:          String
+	createdOn:          Date
+	updatedBy:          String
+	updatedOn:          Date
+	status:             String
+	country:            Country
+}
+
+type Country {
+	id:				Long
+	countryName:    String
+	countryCode:    String
+	isdCode:        String
+}
+
+type Subject{
+    id: Long
+    subjectCode: String
+    subjectType: String
+    subjectDesc: String
+    status: String
+    department:	Department
+    batch: Batch
+  }
+
+type ExamFilterDataCache {
+    branches: [Branch]
+	departments: [Department]
+	batches: [Batch]
+	sections: [Section]
+	subjects: [Subject]
+	academicExamSettings : [CmsAcademicExamSettingVo]
+}

@@ -2,10 +2,12 @@ package com.synectiks.exam.graphql.resolvers;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
-import com.synectiks.exam.domain.AcademicExamSetting;
-import com.synectiks.exam.domain.CompetitiveExam;
-import com.synectiks.exam.domain.StudentExamReport;
-import com.synectiks.exam.domain.TypeOfGrading;
+import com.synectiks.exam.business.service.CommonService;
+import com.synectiks.exam.config.ApplicationProperties;
+import com.synectiks.exam.domain.*;
+import com.synectiks.exam.domain.vo.CmsAcademicExamSettingVo;
+import com.synectiks.exam.filter.exam.ExamFilterProcessor;
+import com.synectiks.exam.filter.exam.ExamListFilterInput;
 import com.synectiks.exam.graphql.types.AcademicExamSetting.*;
 import com.synectiks.exam.graphql.types.TypeOfGrading.*;
 import com.synectiks.exam.graphql.types.CompetitiveExam.*;
@@ -26,6 +28,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,14 @@ public class Mutation implements GraphQLMutationResolver {
     @Autowired
     private CompetitiveExamRepository competitiveExamRepository;
 
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
+    @Autowired
+    private ExamFilterProcessor examFilterProcessor;
+
+    @Autowired
+    CommonService commonService;
 
     @Autowired
     @PersistenceContext
@@ -331,6 +342,42 @@ public class Mutation implements GraphQLMutationResolver {
         StudentExamReport studentExamReport = studentExamReportRepository.findById(removeStudentExamReportsInput.getStudentExamReportId()).get();
         studentExamReportRepository.delete(studentExamReport);
         return new RemoveStudentExamReportPayload(Lists.newArrayList(studentExamReportRepository.findAll()));
+    }
+
+    public List<CmsAcademicExamSettingVo> getExamList(ExamListFilterInput filter) throws Exception {
+        List<CmsAcademicExamSettingVo> list = this.examFilterProcessor.searchAcademicExamSetting(filter);
+        List<CmsAcademicExamSettingVo> ls = new ArrayList<>();
+        String prefUrl = applicationProperties.getPrefSrvUrl();
+        for(CmsAcademicExamSettingVo ace: list) {
+            CmsAcademicExamSettingVo vo = CommonUtil.createCopyProperties(ace, CmsAcademicExamSettingVo.class);
+            String url = prefUrl+"/api/section-by-id/"+vo.getSectionId();
+            Section se = this.commonService.getObject(url, Section.class);
+//    		Section se = this.commonService.getSectionById(vo.getSectionId());
+
+            url = prefUrl+"/api/branch-by-id/"+vo.getBranchId();
+            Branch br = this.commonService.getObject(url, Branch.class);
+//    		Branch br = this.commonService.getBranchById(vo.getBranchId());
+
+            url = prefUrl+"/api/department-by-id/"+vo.getDepartmentId();
+            Department de = this.commonService.getObject(url, Department.class);
+//    		Department de = this.commonService.getDepartmentById(vo.getDepartmentId());
+
+            url = prefUrl+"/api/batch-by-id/"+vo.getBatchId();
+            Batch ba = this.commonService.getObject(url, Batch.class);
+//    		Batch ba = this.commonService.getBatchById(vo.getBatchId());
+
+            url = prefUrl+"/api/subject-by-id/"+vo.getSubjectId();
+            Subject sub = this.commonService.getObject(url, Subject.class);
+//            Subject sub = this.commonService.getSubjectById(vo.getSubjectId());
+            vo.setSection(se);
+            vo.setBranch(br);
+            vo.setBatch(ba);
+            vo.setDepartment(de);
+            vo.setSubject(sub);
+            ls.add(vo);
+        }
+        logger.debug("Total Exams retrieved. "+list.size());
+        return ls;
     }
 
 
