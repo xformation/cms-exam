@@ -3,10 +3,16 @@ package com.synectiks.exam.graphql.resolvers;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.google.common.collect.Lists;
 import com.synectiks.exam.domain.AcademicExamSetting;
+import com.synectiks.exam.domain.CompetitiveExam;
+import com.synectiks.exam.domain.StudentExamReport;
 import com.synectiks.exam.domain.TypeOfGrading;
 import com.synectiks.exam.graphql.types.AcademicExamSetting.*;
 import com.synectiks.exam.graphql.types.TypeOfGrading.*;
+import com.synectiks.exam.graphql.types.CompetitiveExam.*;
+import com.synectiks.exam.graphql.types.StudentExamReport.*;
 import com.synectiks.exam.repository.AcademicExamSettingRepository;
+import com.synectiks.exam.repository.CompetitiveExamRepository;
+import com.synectiks.exam.repository.StudentExamReportRepository;
 import com.synectiks.exam.repository.TypeOfGradingRepository;
 import com.synectiks.exam.service.util.CommonUtil;
 import com.synectiks.exam.service.util.DateFormatUtil;
@@ -32,6 +38,13 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     private TypeOfGradingRepository typeOfGradingRepository;
+
+    @Autowired
+    private StudentExamReportRepository studentExamReportRepository;
+
+    @Autowired
+    private CompetitiveExamRepository competitiveExamRepository;
+
 
     @Autowired
     @PersistenceContext
@@ -192,6 +205,132 @@ public class Mutation implements GraphQLMutationResolver {
         TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(removeTypeOfGradingInput.getTypeOfGradingId()).get();
         typeOfGradingRepository.delete(typeOfGrading);
         return new RemoveTypeOfGradingPayload(Lists.newArrayList(typeOfGradingRepository.findAll()));
+    }
+
+    public AddCompetitiveExamPayload addCompetitiveExam(AddCompetitiveExamInput addCompetitiveExamInput) {
+//        final Student student = studentRepository.findById(addCompetitiveExamInput.getStudentId()).get();
+
+        CompetitiveExam competitiveExam = new CompetitiveExam();
+        competitiveExam.setStudentId(addCompetitiveExamInput.getStudentId());
+        competitiveExam.setTestName(addCompetitiveExamInput.getTestName());
+        competitiveExam.setTestScore(addCompetitiveExamInput.getTestScore());
+        competitiveExam.setEnrollmentNo(addCompetitiveExamInput.getEnrollmentNo());
+        competitiveExam.setRank(addCompetitiveExamInput.getRank());
+        this.competitiveExamRepository.save(competitiveExam);
+        return new AddCompetitiveExamPayload(competitiveExam);
+    }
+
+    public UpdateCompetitiveExamPayload updateCompetitiveExam(UpdateCompetitiveExamInput updateCompetitiveExamInput) {
+        final CompetitiveExam competitiveExam = competitiveExamRepository.findById(updateCompetitiveExamInput.getId()).get();
+
+        if (updateCompetitiveExamInput.getTestName() != null){
+            competitiveExam.setTestName(updateCompetitiveExamInput.getTestName());
+        }
+        if(updateCompetitiveExamInput.getTestScore() != null){
+            competitiveExam.setTestScore(updateCompetitiveExamInput.getTestScore());
+        }
+        if(updateCompetitiveExamInput.getEnrollmentNo() != null){
+            competitiveExam.setEnrollmentNo(updateCompetitiveExamInput.getEnrollmentNo());
+        }
+
+        if(updateCompetitiveExamInput.getRank() != null){
+            competitiveExam.setRank(updateCompetitiveExamInput.getRank());
+        }
+
+        if (updateCompetitiveExamInput.getStudentId() != null) {
+//            final Student student = studentRepository.findById(updateCompetitiveExamInput.getStudentId()).get();
+            competitiveExam.setStudentId(updateCompetitiveExamInput.getStudentId());
+        }
+        competitiveExamRepository.save(competitiveExam);
+        return new UpdateCompetitiveExamPayload(competitiveExam);
+    }
+
+
+    public RemoveCompetitiveExamPayload removeCompetitiveExam(RemoveCompetitiveExamInput removeCompetitiveExamInput) {
+        CompetitiveExam CompetitiveExam = competitiveExamRepository.findById(removeCompetitiveExamInput.getCompetitiveExamId()).get();
+        competitiveExamRepository.delete(CompetitiveExam);
+        return new RemoveCompetitiveExamPayload(Lists.newArrayList(competitiveExamRepository.findAll()));
+    }
+    public AddStudentExamReportPayload addStudentExamReport(AddStudentExamReportInput addStudentExamReportInput) {
+        final StudentExamReport studentExamReport = new StudentExamReport();
+
+        TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(addStudentExamReportInput.getTypeOfGradingId()).get();
+        AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(addStudentExamReportInput.getAcademicExamSettingId()).get();
+//        AcademicYear academicYear = academicYearRepository.findById(addStudentExamReportInput.getAcademicyearId()).get();
+//        Student student = studentRepository.findById(addStudentExamReportInput.getStudentId()).get();
+//        Batch batch = batchRepository.findById(addStudentExamReportInput.getBatchId()).get();
+//        Department department = departmentRepository.findById(addStudentExamReportInput.getDepartmentId()).get();
+//        Subject subject = subjectRepository.findById(addStudentExamReportInput.getSubjectId()).get();
+//        Section section =sectionRepository.findById(addStudentExamReportInput.getSectionId()).get();
+        studentExamReport.setTypeOfGrading(typeOfGrading);
+        studentExamReport.setAcademicyearId(addStudentExamReportInput.getAcademicyearId());
+        studentExamReport.setAcademicExamSetting(academicExamSetting);
+        studentExamReport.setBatchId(addStudentExamReportInput.getBatchId());
+        studentExamReport.setStudentId(addStudentExamReportInput.getStudentId());
+        studentExamReport.setDepartmentId(addStudentExamReportInput.getDepartmentId());
+        studentExamReport.setSectionId(addStudentExamReportInput.getSectionId());
+        studentExamReport.setSubjectId(addStudentExamReportInput.getSubjectId());
+        studentExamReport.setMarksObtained(addStudentExamReportInput.getMarksObtained());
+        studentExamReport.setComments(addStudentExamReportInput.getComments());
+        studentExamReport.setgOp(addStudentExamReportInput.getgOp());
+        studentExamReportRepository.save(studentExamReport);
+        return new AddStudentExamReportPayload(studentExamReport);
+    }
+
+    public UpdateStudentExamReportPayload updateStudentExamReport(UpdateStudentExamReportInput updateStudentExamReportInput) {
+        StudentExamReport studentExamReport = studentExamReportRepository.findById(updateStudentExamReportInput.getId()).get();
+
+
+        if (updateStudentExamReportInput.getMarksObtained() != null) {
+            studentExamReport.setMarksObtained(updateStudentExamReportInput.getMarksObtained());
+        }
+        if (updateStudentExamReportInput.getComments() != null) {
+            studentExamReport.setComments(updateStudentExamReportInput.getComments());
+        }
+        if (updateStudentExamReportInput.getgOp() != null) {
+            studentExamReport.setgOp(updateStudentExamReportInput.getgOp());
+        }
+        if (updateStudentExamReportInput.getAcademicExamSettingId() != null) {
+            final AcademicExamSetting academicExamSetting = academicExamSettingRepository.findById(updateStudentExamReportInput.getAcademicExamSettingId()).get();
+            studentExamReport.setAcademicExamSetting(academicExamSetting);
+        }
+        if (updateStudentExamReportInput.getAcademicyearId() != null) {
+//            final AcademicYear academicYear = academicYearRepository.findById(updateStudentExamReportInput.getAcademicyearId()).get();
+            studentExamReport.setAcademicyearId(updateStudentExamReportInput.getAcademicyearId());
+        }
+        if (updateStudentExamReportInput.getStudentId() != null) {
+//            final Student student = studentRepository.findById(updateStudentExamReportInput.getStudentId()).get();
+            studentExamReport.setStudentId(updateStudentExamReportInput.getStudentId());
+        }
+        if (updateStudentExamReportInput.getBatchId() != null) {
+//            final Batch batch = batchRepository.findById(updateStudentExamReportInput.getBatchId()).get();
+            studentExamReport.setBatchId(updateStudentExamReportInput.getBatchId());
+        }
+        if (updateStudentExamReportInput.getDepartmentId() != null) {
+//            final Department department = departmentRepository.findById(updateStudentExamReportInput.getDepartmentId()).get();
+            studentExamReport.setDepartmentId(updateStudentExamReportInput.getDepartmentId());
+        }
+        if (updateStudentExamReportInput.getTypeOfGradingId() != null) {
+            final TypeOfGrading typeOfGrading = typeOfGradingRepository.findById(updateStudentExamReportInput.getTypeOfGradingId()).get();
+            studentExamReport.setTypeOfGrading(typeOfGrading);
+        }
+        if (updateStudentExamReportInput.getSectionId() != null) {
+//            final Section section = sectionRepository.findById(updateStudentExamReportInput.getSectionId()).get();
+            studentExamReport.setSectionId(updateStudentExamReportInput.getSectionId());
+        }
+        if (updateStudentExamReportInput.getSubjectId() != null) {
+//            final Subject subject = subjectRepository.findById(updateStudentExamReportInput.getSubjectId()).get();
+            studentExamReport.setSubjectId(updateStudentExamReportInput.getSubjectId());
+        }
+        studentExamReportRepository.save(studentExamReport);
+
+        return new UpdateStudentExamReportPayload(studentExamReport);
+    }
+
+    public RemoveStudentExamReportPayload removeStudentExamReport(RemoveStudentExamReportInput removeStudentExamReportsInput) {
+        StudentExamReport studentExamReport = studentExamReportRepository.findById(removeStudentExamReportsInput.getStudentExamReportId()).get();
+        studentExamReportRepository.delete(studentExamReport);
+        return new RemoveStudentExamReportPayload(Lists.newArrayList(studentExamReportRepository.findAll()));
     }
 
 

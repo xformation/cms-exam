@@ -9,6 +9,14 @@ type Mutation {
      updateTypeOfGrading(input: UpdateTypeOfGradingInput): UpdateTypeOfGradingPayload
      removeTypeOfGrading(input: RemoveTypeOfGradingInput): RemoveTypeOfGradingPayload
 
+         addCompetitiveExam(input:AddCompetitiveExamInput):AddCompetitiveExamPayload
+         updateCompetitiveExam(input:UpdateCompetitiveExamInput):UpdateCompetitiveExamPayload
+         removeCompetitiveExam(input:RemoveCompetitiveExamInput):RemoveCompetitiveExamPayload
+
+        addStudentExamReport(input: AddStudentExamReportInput): AddStudentExamReportPayload
+        updateStudentExamReport(input: UpdateStudentExamReportInput): UpdateStudentExamReportPayload
+        removeStudentExamReport(input: RemoveStudentExamReportInput): RemoveStudentExamReportPayload
+
 }
 
 type Query {
@@ -17,6 +25,12 @@ type Query {
 
   typeOfGrading(id: Int): TypeOfGrading
   typeOfGradings:[TypeOfGrading]
+
+  studentExamReport(id: Long): StudentExamReport
+  studentExamReports: [StudentExamReport]
+
+  competitiveExam (id: Long): CompetitiveExam
+  competitiveExams: [CompetitiveExam]
 
 }
 
@@ -48,6 +62,30 @@ type TypeOfGrading{
     maxMarks: Int
     grades: String
     groupvalue: Long
+}
+
+type CompetitiveExam{
+    id: Long
+    testName: String
+    testScore: Int
+    enrollmentNo: Long
+    rank: Long
+    studentId: Long
+ }
+
+type StudentExamReport{
+    id: Long
+    marksObtained: Int
+    comments: String
+    gOp: Int
+    studentId: Long
+    academicExamSetting: AcademicExamSetting
+    typeOfGrading: TypeOfGrading
+    academicyearId: Long
+    batchId: Long
+    departmentId: Long
+    subjectId: Long
+    sectionId: Long
 }
 
 input AddAcademicExamSettingInput{
@@ -131,3 +169,75 @@ input RemoveTypeOfGradingInput {
 type RemoveTypeOfGradingPayload {
     typeOfGradings: [ TypeOfGrading]
 }
+input AddStudentExamReportInput{
+        marksObtained: Int
+        comments: String
+        gOp: Int
+        studentId: Long
+        academicExamSettingId: Long
+        typeOfGradingId: Long
+        academicyearId: Long
+        batchId: Long
+        departmentId:Long
+        sectionId:Long
+        subjectId:Long
+}
+
+type AddStudentExamReportPayload {
+    studentExamReport: StudentExamReport
+}
+input UpdateStudentExamReportInput {
+    id: Long
+    marksObtained: Int
+    comments: String
+    gOp: Int
+    studentId: Long
+    academicExamSettingId: Long
+    typeOfGradingId: Long
+    academicyearId: Long
+    batchId: Long
+    departmentId:Long
+    sectionId:Long
+    subjectId:Long
+}
+
+type UpdateStudentExamReportPayload {
+    studentExamReport: StudentExamReport
+}
+input RemoveStudentExamReportInput {
+   studentExamReportId: Long
+}
+type RemoveStudentExamReportPayload {
+    studentExamReports: [ StudentExamReport]
+}
+
+input AddCompetitiveExamInput{
+    testName: String
+    testScore: Int
+    enrollmentNo: Long
+    rank: Long
+    studentId: Long
+}
+
+type AddCompetitiveExamPayload {
+    competitiveExam: CompetitiveExam
+}
+input UpdateCompetitiveExamInput {
+        id: Long
+        testName: String
+        testScore: Int
+        enrollmentNo: Long
+        rank: Long
+        studentId: Long
+}
+
+type UpdateCompetitiveExamPayload {
+    competitiveExam: CompetitiveExam
+}
+input RemoveCompetitiveExamInput {
+   competitiveExamId: Long
+}
+type RemoveCompetitiveExamPayload {
+    competitiveExams: [ CompetitiveExam]
+}
+
