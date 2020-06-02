@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -95,19 +96,24 @@ public class Query  implements GraphQLQueryResolver {
 
     public ExamFilterDataCache createExamFilterDataCache(Long branchId, Long departmentId,Long academicYearId) throws Exception{
         String preUrl = this.applicationProperties.getPrefSrvUrl();
-        List<Branch> branchList = this.commonService.findAllBranch();
-        List<Department> departmentList = this.commonService.findAllDepartment();
-        List<Batch> batchList = this.commonService.findAllBatches();
-        List<Section> sectionList = this.commonService.findAllSections();
+        String url = preUrl+"/api/branch-by-filters/";
+        Branch[] branchList = this.commonService.getObject(url,Branch[].class);
+        url = preUrl+"/api/batch-by-filters/";
+        Batch[] batchList = this.commonService.getObject(url,Batch[].class);
+        url = preUrl+"/api/department-by-filters/";
+        Department[] departmentList = this.commonService.getObject(url,Department[].class);
+        url = preUrl+"/api/section-by-filters/";
+        Section[] sectionList = this.commonService.getObject(url,Section[].class);
         List<CmsAcademicExamSettingVo> examsList= this.examService.getAcademicList();
-        List<Subject> sub = this.commonService.findAllSubject();
+        url = preUrl+"/api/subject-by-filters/";
+        Subject[] sub = this.commonService.getObject(url,Subject[].class);
         ExamFilterDataCache cache = new ExamFilterDataCache();
-        cache.setBranches(branchList);
-        cache.setDepartments(departmentList);
-        cache.setBatches(batchList);
+        cache.setBranches(Arrays.asList(branchList));
+        cache.setDepartments(Arrays.asList(departmentList));
+        cache.setBatches(Arrays.asList(batchList));
         cache.setAcademicExamSettings(examsList);
-        cache.setSubjects(sub);
-        cache.setSections(sectionList);
+        cache.setSubjects(Arrays.asList(sub));
+        cache.setSections(Arrays.asList(sectionList));
         return cache;
     }
 
